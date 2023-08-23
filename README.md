@@ -15,7 +15,7 @@ Flask app designed for retrieving Daily Job Opportunity Announcements data for a
 
 ## 1. Installation
 
-### 1.1 Dependendencies installation
+### 1.1 Dependencies installation
 
 To install this project, it is recommended to use `virtualenv` python package. By default, macOS has installed the `python3` binary. So the following commands should work:
   
