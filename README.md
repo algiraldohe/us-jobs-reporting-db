@@ -3,7 +3,6 @@ Flask app designed for retrieving Daily Job Opportunity Announcements data for a
 
 [API Docs](https://developer.usajobs.gov/API-Reference/GET-api-Search)
 
-
 ## Table of content
 
   
@@ -11,7 +10,8 @@ Flask app designed for retrieving Daily Job Opportunity Announcements data for a
 | :------ | :---------- |
 | [1. Installation](#1_installation) | Steps for dependencies installation and other configurations |
 | [2. Guidelines](#2_guidelines) | Philosophy and rules for coding |
-| [3. API Usage](#3_api_usage) | How to use this service |
+| [3. Architecture Walkthrough](#3_api_usage) | Design of the Implemented Solution |
+| [4. API Usage](#4_api_usage) | How to use this service |
 
 ## 1. Installation
 
@@ -106,4 +106,6 @@ pre-commit install --hook-type commit-msg --hook-type pre-push
 
 ```
 
-![BaseDiagram](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/Untitled%20Diagram.jpg)
+## 3. Architecture Walkthrough
+
+![BaseDiagram](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/base_diagram.png)
