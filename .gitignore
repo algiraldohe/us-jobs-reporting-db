@@ -1,2 +1,5 @@
 # Virtualenvs
 .venv/
+
+# Test data 
+response.json

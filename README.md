@@ -108,4 +108,24 @@ pre-commit install --hook-type commit-msg --hook-type pre-push
 
 ## 3. Architecture Walkthrough
 
-![BaseDiagram](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/base_diagram.png)
+![BaseDiagram](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/imgs/base_diagram.png)
+
+The diagram simulates a loosely decoupled architecture where each component operates independently improving flexibility and scalability.
+
+**Tech Stack:**
+Cron: Time-based job scheduler
+Python
+Docker
+PostgreSQL
+
+### 3.1. Components
+
+- **Orchestrator:** In charge of making the request to the host in order to carry out the process at the specified time (daily scheduled trigger).
+
+- **Data Sources:** The USAJOBS REST-based API is designed to support lightweight content consumption by consumers.
+  
+- **Host:** Docker container running Python and PostgreSQL images with the following assignments: 
+ *(Each representing an independent container)*
+ 
+1. Parse request for the job search from the user, fetch the data and load it into a folder.
+2. Take the data, clean, transform and load it into the database with a set schema.
