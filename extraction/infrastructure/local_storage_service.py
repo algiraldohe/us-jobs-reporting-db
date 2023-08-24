@@ -19,7 +19,7 @@ class LocalStorageService:
             str: path where the file containing the data was saved.
         """
         # Set output path
-        storage = "file-storage/"
+        storage = "../file-storage/"
         filestorage = os.path.join(os.getcwd(), storage)
 
         if not os.path.exists(filestorage):

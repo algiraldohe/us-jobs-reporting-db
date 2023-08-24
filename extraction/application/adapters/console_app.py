@@ -24,9 +24,11 @@ class ConsoleApp:
 
     def extract_jobs_adapter(self) -> None:
         request = {
-            "keyword": self.arguments[1],  # Need documentation
-            "date_posted": int(self.arguments[2]),
-            "location_name": self.arguments[3],
+            "Keyword": self.arguments[1],  # Need documentation
+            "DatePosted": int(self.arguments[2]),
+            "LocationName": self.arguments[3],
+            "Page": 0,
+            "ResultsPerPage": 100
         }
         extract_jobs(request, self.storage_service)
 
