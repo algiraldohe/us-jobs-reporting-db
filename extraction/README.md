@@ -1,11 +1,13 @@
 # Extraction Container
-App designed for retrieving Daily Job Opportunity Announcements data for a given keyword.
+App designed for retrieving Daily Job Opportunity Announcements data for a given keyword spaning a time frame.
 
 ## Table of content
 
 | Content | Description |
 | :------ | :---------- |
-| [1. Installation](#1_installation) | Steps for dependencies installation |
+| [1. Installation](#1-installation) | Steps for dependencies installation |
+| [2. Guidelines](#2-guidelines) | Code structure and layout |
+| [3. APP Usage](#3-app-usage) | How to use the APP |
 
 ## 1. Installation
 
@@ -70,4 +72,27 @@ Check docstyle in the code (docstyle configuration is set in .pydocstyle):
 
 ```
 pydocstyle
+```
+
+## 2. Guidelines
+
+### 2.1 Files Structure
+
+For the correct functioning of the application I have disposed the following:
+
+`Makefile` used to build and run the docker container for the app.
+`Dockerfile` with the container configuration and required images.
+`.env` and `.env.docker` with environment variables used in the extraction process one for local testing one for container testing.
+
+
+## 3. APP Usage
+
+In order to run the extraction process use the following:
+
+```
+# Build the image of the container
+make build
+
+# Run the container
+make run
 ```
