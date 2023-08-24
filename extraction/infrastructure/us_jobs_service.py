@@ -2,10 +2,13 @@ import json
 import os
 
 import requests
+from requests.adapters import HTTPAdapter, Retry
 
 API_KEY = os.environ.get("USAJOBS_KEY")
 API_URL = "https://data.usajobs.gov/api/"
-
+s = requests.Session()
+retries = Retry(total=5, backoff_factor=0.1)
+s.mount("http://", HTTPAdapter(max_retries=retries))
 
 class USJobsService:
     """
@@ -33,11 +36,14 @@ class USJobsService:
         """
 
         # Send the GET request
-        response = requests.get(
+        response = s.get(
             f"{API_URL}/search", params=request, headers=self.headers
         )
+        if response.status_code == 200:
+            # Parse the JSON response
+            data = response.json()
 
-        # Parse the JSON response
-        data = response.json()
+            return data
 
-        return data
+        else:
+            raise Exception("The API is not working properly, try again later.")
