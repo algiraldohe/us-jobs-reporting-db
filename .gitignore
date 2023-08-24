@@ -6,6 +6,9 @@ __pycache__/
 #PostgreSQL
 postgres_data/
 
+#Datalake
+file-storage/
+
 # C extensions
 *.so
 
