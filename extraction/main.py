@@ -13,7 +13,6 @@ if sys.argv[1] == "--console":
     console_app.create_app()
 
 
-
 elif sys.argv[1] == "--flask":
     print("Flask app not implemented")
 

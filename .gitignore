@@ -9,6 +9,9 @@ postgres_data/
 #Datalake
 file-storage/
 
+# VS Code
+.vscode/
+
 # C extensions
 *.so
 
