@@ -1,8 +1,12 @@
 import json
 import os
 import sys
+from datetime import datetime
 
-from domain.extract_jobs import extract_jobs
+from domain.save_jobs import save_jobs
+from infrastructure.read_data_service import read_file
+from infrastructure.transformation_service import extract_fields
+
 
 
 class ConsoleApp:
@@ -22,17 +26,35 @@ class ConsoleApp:
         """
         self.arguments = sys.argv[2:]
 
-    def extract_jobs_adapter(self) -> None:
-        request = {
-            "keyword": self.arguments[1],  # Need documentation
-            "date_posted": int(self.arguments[2]),
-            "location_name": self.arguments[3],
-        }
-        extract_jobs(request, self.storage_service)
+    def get_jobs_adapter(self) -> None:
+        filestorage = os.environ.get("FILESTORAGE")
+
+        jobs_data = read_file(filestorage=filestorage)
+        return jobs_data
+
+    def clean_jobs_adapter(self, data:dict) -> None:
+        """
+        1. Extract required fields
+        2. Standardise data types before ingestion
+        """
+        formatted_jobs_data = extract_fields(data)
+        print(formatted_jobs_data)
+
+        # Perform cleaning and transformations operations
+
+
+    def save_jobs_adapter(self) -> None:
+        # Save the data into the databse
+        pass
 
     def create_app(self) -> None:
         self.get_arguments()
 
-        if self.arguments[0] == "extract_jobs":
-            self.extract_jobs_adapter()
+        if self.arguments[0] == "save_jobs":
+            jobs_data = self.get_jobs_adapter()
+            formated_jobs_data = self.clean_jobs_adapter(data=jobs_data)
+
+
+
+
 
