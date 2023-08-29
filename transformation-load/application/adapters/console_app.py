@@ -1,12 +1,9 @@
-import json
 import os
 import sys
-import pandas as pd
-from datetime import datetime
 
-from domain.transform_jobs import extract_fields_path, extract_fields_data
+from domain.transform_jobs import extract_fields_path, extract_fields_data, arrays_to_dataframe
 from domain.save_jobs import save_jobs
-from infrastructure.read_data_service import read_file
+from pymysql import OperationalError
 
 
 class ConsoleApp:
@@ -26,24 +23,23 @@ class ConsoleApp:
         """
         self.arguments = sys.argv[2:]
 
-    # def get_jobs_adapter(self) -> None:
-    #     filestorage = os.environ.get("FILESTORAGE")
-
-    #     jobs_data = read_file(filestorage=filestorage)
-    #     return jobs_data
-
     def store_jobs_adapter(self) -> dict:
         """
         Extract data from the required fields
         """
         filestorage = os.environ.get("FILESTORAGE")
-        jobs_data = read_file(filestorage=filestorage)
+        jobs_data = self.storage_service.read_file(filestorage=filestorage)
 
         self.paths = extract_fields_path(jobs_data)
 
         extracted_data = list(map(lambda x: extract_fields_data(data=jobs_data, path=x), self.paths.values()))
 
-        return extracted_data
+        jobs_dataframe = arrays_to_dataframe(data=extracted_data)
+
+        try:
+            save_jobs(jobs_dataframe, self.storage_service, **{"json_fields":["PositionLocation", "PositionRemuneration"]})
+        except OperationalError as e:
+            print(e)
 
 
     def create_app(self) -> None:
