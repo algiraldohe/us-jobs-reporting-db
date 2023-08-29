@@ -1,28 +1,20 @@
-import os
-
-import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
+import sys
 
-API_URL = "https://data.usajobs.gov/api/"
-API_KEY = os.environ.get("USAJOBS_KEY")
+from application.adapters.console_app import ConsoleApp
+from infrastructure.local_storage_service import LocalStorageService
+
+if sys.argv[1] == "--console":
+    local_storage = LocalStorageService()
+    console_app = ConsoleApp(local_storage)  # Dependency injection
+    console_app.create_app()
 
 
-headers = {"Authorization-Key": API_KEY}
+elif sys.argv[1] == "--flask":
+    print("Flask app not implemented")
 
-# Parameters to be included in the URL
-params = {
-    "Keyword": "data engineering",
-    "DatePosted": 3,
-    "LocationName": ["Chicago, Illinois"],
-}
-
-# Send the GET request
-response = requests.get(f"{API_URL}/search", params=params, headers=headers)
-
-# Parse the JSON response
-data = response.json()
-
-print(data)
+else:
+    print("Mode not found")

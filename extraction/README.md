@@ -96,3 +96,7 @@ make build
 # Run the container
 make run
 ```
+
+**Running Locally**
+
+`python3 main.py --console "extract_jobs" "data engineering" 2 "Chicago, Illinois"`
