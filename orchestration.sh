@@ -1,11 +1,6 @@
-echo "Start Extraction Process"
-cd /Users/alejandrogiraldoh/Development/us-jobs-reporting-db/orchestration.sh
-cd extraction && /usr/local/bin/docker run --env-file .env -v /file-storage/:/file-storage extraction-service touch hola.txt
-echo "Finish Extraction Process"
-
-# cd ..
-# cd transformation-load
-# make run
-
-# Command to run extraction service
-# python3 main.py --console "extract_jobs" "data engineering" 2 "Chicago, Illinois"
+cd /Users/alejandrogiraldoh/Development/us-jobs-reporting-db
+cd extraction
+make run OPERATION="extract_jobs"  KEYWORD="data engineering" DAYS=2 LOCATION="Chicago, Illinois"
+cd ..
+cd transformation-load
+make run
