@@ -1,5 +1,5 @@
 from infrastructure.json_search_service import find_json_path
-import json
+import pandas as pd
 
 
 def navigate_dict(data, keys):
@@ -95,6 +95,29 @@ def extract_fields_data(data:dict, path:list) -> dict:
         extracted_data[field].append(current)
 
     return extracted_data
+
+
+def arrays_to_dataframe(data:list) -> pd.DataFrame:
+    """
+    This function takes an array and creates a tabular format
+    out of it to fit in a pd.DataFrame object.
+
+    Args:
+        data (list): _description_
+
+    Returns:
+        pd.DataFrame: _description_
+    """
+    combined_data_dict = {}
+    for dictionary in data:
+        combined_data_dict = {**combined_data_dict, **dictionary}
+
+    jobs_data_df = pd.DataFrame(combined_data_dict)
+
+    return jobs_data_df
+
+
+
 
 
 
