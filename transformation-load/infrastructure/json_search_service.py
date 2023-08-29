@@ -27,7 +27,7 @@ def search_fields(json_obj, target_field, current_path=None):
 def filter_strings(input_list:list) -> list:
     """
     Return a proper list of field without considering the
-    iterable strcutures.
+    iterable structures.
 
     Args:
         input_list (list): _description_

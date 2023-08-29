@@ -6,6 +6,8 @@ create-network:
 
 clear-db:
 	rm -rf $(PWD)/postgres_data/
+
+restart-db:
 	docker rm db
 	docker network rm database-network
 
@@ -16,4 +18,4 @@ run-migrations:
 	docker run --env-file .env.docker --network database-network transform-load-service alembic upgrade head
 
 run:
-	docker run --env-file .env.docker --network database-network transform-load-service python main.py --console
+	docker run --env-file .env.docker -v $(PWD)/../file-storage/:/file-storage --network database-network transform-load-service python main.py --console "$(OPERATION)"
