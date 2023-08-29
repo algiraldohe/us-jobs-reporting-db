@@ -13,6 +13,7 @@ class Job(Base):
 
     id = Column(Integer, primary_key=True)
     jobname = Column(String)
+    description = Column(String)
 
     def __repr__(self):
-        return f"id: {self.id}, jobname: {self.jobname}"
+        return f"id: {self.id}, jobname: {self.jobname}, description: {self.description}"

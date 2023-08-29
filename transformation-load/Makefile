@@ -6,12 +6,14 @@ create-network:
 
 clear-db:
 	rm -rf $(PWD)/postgres_data/
+	docker rm db
+	docker network rm database-network
 
 run-db:
-	docker run --name db --env-file .env.docker -v $(PWD)/postgres_data/:/var/lib/postgresql/data --network database-network postgres:14.1-alpine
+	docker run --name db --env-file .env.docker -v $(PWD)/postgres_data/:/var/lib/postgresql/data --network database-network -p 5432:5432  postgres:14.1-alpine
 
 run-migrations:
 	docker run --env-file .env.docker --network database-network transform-load-service alembic upgrade head
 
 run:
-	docker run --env-file .env.docker --network database-network transform-load-service python main.py
+	docker run --env-file .env.docker --network database-network transform-load-service python main.py --console
