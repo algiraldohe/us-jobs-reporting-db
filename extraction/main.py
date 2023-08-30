@@ -9,7 +9,7 @@ from infrastructure.local_storage_service import LocalStorageService
 print(sys.argv)
 if sys.argv[1] == "--console":
     local_storage = LocalStorageService()
-    console_app = ConsoleApp(local_storage)  # Dependency injection
+    console_app = ConsoleApp(local_storage)
     console_app.create_app()
 
 

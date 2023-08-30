@@ -5,14 +5,13 @@ Flask app designed for retrieving Daily Job Opportunity Announcements data for a
 
 ## Table of content
 
-
 | Content | Description |
 | :------ | :---------- |
 | [1. Installation](#1-installation) | Steps for dependencies installation and other configurations |
 | [2. Guidelines](#2-guidelines) | Philosophy and rules for coding |
 | [3. Architecture Walkthrough](#3-architecture-walkthrough) | APP design and project general layout |
 | [4. APP Usage](#4-app-usage) | How to use this application |
-| [5. Cloud Implementation](#5-cloud-implementation) | APP architecture implemented in gcp |
+| [5. Cloud Implementation](#5-cloud-implementation) | APP architecture implemented in GCP |
 | [6. Future Improvements](#6-future-improvements) | Making a more robust and efficient application |
 
 ## 1. Installation
@@ -162,6 +161,10 @@ PostgreSQL
 
 ### 3.2 Main Tech Stack
 
+**Python**
+**SQLAlchemy**
+**Alembic**
+**PostgreSQL**
 
 ## 4. APP Usage
 
@@ -175,16 +178,17 @@ PostgreSQL
 
 `postgres-data:` This folder serves the purpose of storing the data transformed in a resilient way independently from the container storage.
 
-`database-network`: Virtual environment created to allow the docker containers to communicate with each other.
+`database-network`: Virtual environment within docker, created to allow the docker containers to communicate with each other.
+
 ### 4.2 Setting Everything Up
 
 #### 4.2.1 Containers
-The two main services of the app run independently from one another. There are four containers that compose the application `us-jobs-application`:
+The two main services of the app run independently from one another in one container each. Additionally, there are other 2 containers that compose the application `us-jobs-application`:
 
 1. `extraction-service` 
 2. `transform-load-service`
 3. `db`
-4. `admin`
+4. `db-admin`
 
 #### 4.2.2 Requirements:
 - Docker must be installed and running already in the environment.
@@ -199,7 +203,7 @@ The following instructions illustrate how to run `us-jobs-application` using doc
 
 ***DISCLAIMER: The following instructions only apply to users that are running MacOS. This documentation does not provide the setting up instructions to run the code in Windows although the commands might be similar to Linux environments***
 
-#### 4.3.1 Setting the Repo
+#### 4.3.1 Setting Up the Repo
 
 1. Cloning the repository 
 ```bash
@@ -216,13 +220,18 @@ git clone git@github.com:algiraldohe/us-jobs-reporting-db.git
 
 ## 5. Cloud Implementation
 
-![CloudArchitecture](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/Cloud%20GCP%20Architecture.png)
+![CloudArchitecture](https://github.com/algiraldohe/us-jobs-reporting-db/blob/8ecf535a03283bf6a4c6ee78f04f7dde3d1df6b5/docs/images/Cloud%20GCP%20Architecture(1).png)
 
 ### 5.1 Services Breakdown
 
 
 ## 6. Future Improvements
 
+- Logging
+- Notification/messaging 
+- Implementation of abstract classes for code and methods re-utilisation
+- Error handling
+- In-depth cleansing operations, given downstream services
 
 
 

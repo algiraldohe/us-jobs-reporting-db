@@ -1,5 +1,5 @@
 # Extraction Container
-App designed for retrieving Daily Job Opportunity Announcements data for a given keyword spaning a time frame.
+App designed for retrieving Daily Job Opportunity Announcements data for a given keyword spaning a time frame and an determined location .
 
 ## Table of content
 
@@ -7,11 +7,11 @@ App designed for retrieving Daily Job Opportunity Announcements data for a given
 | :------ | :---------- |
 | [1. Installation](#1-installation) | Steps for dependencies installation |
 | [2. Guidelines](#2-guidelines) | Code structure and layout |
-| [3. APP Usage](#3-app-usage) | How to use the APP |
+| [3. APP Usage](#3-app-usage) | How to use the `extraction-service` |
 
 ## 1. Installation
 
-### 1.1 Dependencies installation
+### 1.1. Dependencies installation
 
 To install this project, it is recommended to use `virtualenv` python package. By default, macOS has installed the `python3` binary. So the following commands should work:
 
@@ -63,7 +63,7 @@ pydocstyle
 
 ## 2. Guidelines
 
-### 2.1 Files Structure
+### 2.1. Files Structure
 
 The main idea was to split the code into three cores: application, domain and infrastructure (see diagram).
 
@@ -80,21 +80,37 @@ In `infrastructure` folder we have all the code related to persistence (database
 
 ## 3. APP Usage
 
-### 3.1 Components
-For the correct functioning of the application I have laid down the following:
+### 3.1. Search Criteria
+
+- Perform a search of jobs that have `data engineering` as a _keyword_.
+- Parse a subset of fields from the response that a job-seeker based in Chicago with 5 years of experience, would find useful in their own database of job postings.
+
+**References**
+- Search parameters [Search](https://developer.usajobs.gov/API-Reference/GET-api-Search)
+- To determine the value of the `PayGradeLow` parameter to filter accurate results for the experience requirement. *"5 years of experience (...)"*[PayGradeLow](https://www.usajobs.gov/Help/faq/pay/series-and-grade/)
+
+### 3.1. Components
+
+`application.adapters.console_app.py` : The console adapter takes in the requested parameters (input through the console in a local env) to translate the request for `domain`.
+
+`domain.extract_jobs.py` : Receives the request and uses services in `infrastructure` to perform the programmed business logic.
+
+`infrastructure.us_jobs_service` : Handles the request and performs the HTTP request to the API retrieving the data for `domain`.
+
+`infrastructure.local_storage_service.py` : Receives the data from `domain` and saves the data in the file storage set up in the `save_data()` method of the class.
+
+Furthermore, for the correct functioning of the application I have laid down the following:
 
 - `Makefile` is used alias the command's instructions to manipulate, set up and run the service.
 - `Dockerfile` with the container configuration and required images and parameters.
 - Env files `.env` and `.env.docker` with environment variables used in the extraction process one for running the service locally and the other to run it with docker.
+- Template file `.env.template` to have a clear guidance of the required env variables.
   
-  Additionally, there's and `.env.template` for the env files in order to provide the structure and variables that need to be filled for the correct functionality of the code. 
     ***Note: (Keep the env variable FILESTORAGE=../file-storage/)***
 
-**Running Locally**
-`python3 main.py --console "extract_jobs" "data engineering" 2 "Chicago, Illinois"`
+### 3.2. Commands 
 
-### Commands 
-
+#### 3.1. Docker
 ```bash
 # Assuming you are just outside of the cloned repo
 cd us-jobs-reporting-db
@@ -106,8 +122,75 @@ cd extraction
 make build
 
 # 3. run the service to extract and save the data from USA Jobs reporting database
-make run
+make run OPERATION="extract_jobs"  KEYWORD="data engineering" DAYS=2 LOCATION="Chicago, Illinois"
+
+```
+#### 3.2. Local
+
+```bash
+# Assuming you are just outside of the cloned repo
+cd us-jobs-reporting-db
+
+# 1. change the directory to the `extraction` service director
+cd extraction
+
+# 2. activate the venv created before
+source venv/bin/activate
+
+# 3. run the extraction service
+python3 main.py --console "extract_jobs" "data engineering" 2 "Chicago, Illinois"
 
 ```
 
 After the execution of the above commands, the `file-storage` folder will be created and there will be a `YYYY-mm-dd-us-jobs.json` file inside, corresponding to the date the process was run.
+
+### 3.3. Important Functionality Considerations
+
+##### 3.3.1. API USA Jobs 
+Non-desired behaviour with the API:
+
+- `DatePosted` field requires a value of 2 instead of 1 to span the results of the previous day. (Like considering today and the day before in the search). When DAYS=1, there's no output result. [See ref]()
+
+- `DatePosted` field does not filter properly the output set, considering job positions published in dates outside the intervals. ( check output data on `PublicationStartDate`)
+  
+- `DatePosted` changing the parameter does present different results although there is overlapping.
+
+- `PositionLocation` presents some outlier results in the output array of `PositionLocation` where `"Chicago, Illinois"` is not within the array, hence the location does not match our search.( *Note: `RemoteIndicator` was False in the spotted cases* )
+
+##### 3.3.2. Codebase
+
+- `../file-storage` requires permissions in docker to create the folder. You need to add the path to the folder to the following file: 
+`~/Library/Group Containers/group.com.docker/settings.json` or from the docker GUI.
+
+```json
+"filesharingDirectories" : [
+    "/Users",
+    "/Volumes",
+    "/private",
+    "/tmp", 
+	"[PATH_TO_SHARED_FOLDER]"
+  ]
+```
+[See GitHub issue](https://github.com/docker/for-mac/issues/2214)
+
+- Depending on the system `/extraction/Makefile` requires changing `$(PWD)` variable for the lower-case variation `$(pwd)`. 
+
+- Using the `sys.argv` in Python  
+```python
+# when using the following method
+extraction.application.adapters.console_app.py
+	extract_jobs_adapter()
+
+# know this:
+"""
+self.arguments[1] correspond to the KEYWORD argument
+self.arguments[2] correspond to the DAYS argument
+self.arguments[3] correspond to the LOCATION argument
+self.arguments[4] correspond to the GRADE argument
+"""
+```
+
+### 4. Future Improvements
+
+- Should I perform parameter validation for the ConsoleAdapter?
+- save_data -> Implement the pagination with the saved file so we don't ended up with huge files carry to much data
