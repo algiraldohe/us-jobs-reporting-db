@@ -123,7 +123,7 @@ cd extraction
 make build
 
 # 3. run the service to extract and save the data from USA Jobs reporting database
-make run OPERATION="extract_jobs"  KEYWORD="data engineering" DAYS=2 LOCATION="Chicago, Illinois" GRADE=7
+make run OPERATION="extract_jobs" KEYWORD="data engineering" DAYS=2 LOCATION="Chicago, Illinois" GRADE=7
 
 ```
 #### 3.2. Local
