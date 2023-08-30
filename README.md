@@ -2,7 +2,6 @@
 APP designed for retrieving Daily Job Opportunity Announcements data for a given keyword.
 
 [API Docs](https://developer.usajobs.gov/API-Reference/GET-api-Search)
-
 ## Table of content
 
 | Content | Description |
@@ -126,7 +125,10 @@ pre-commit install --hook-type commit-msg --hook-type pre-push
 
 The main idea is to split the code into three cores: application, domain and infrastructure (see diagram).
 
-![ProjectStructure](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/ProjectStructure(1).png)
+<p align="center">
+  <img src="https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/ProjectStructure(1).png" alt="ProjectStructure">
+</p>
+
 
 
 All code relevant to how a user access data (HTTP requests, Console) should be in the application folder, that is why all frameworks code is located in this folder.
@@ -150,7 +152,9 @@ Some rules we should encourage in our development:
 
 ## 3. Architecture Walkthrough
 
-![BaseDiagram](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/USJobs.png)
+<p align="center">
+  <img src="https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/USJobs.png" alt="BaseArchitectureDiagram">
+</p>
 
 The diagram simulates a loosely decoupled architecture where each component operates independently improving flexibility and scalability.
 
@@ -189,7 +193,7 @@ The diagram simulates a loosely decoupled architecture where each component oper
 
 `database-network`: Virtual environment within docker, created to allow the docker containers to communicate with each other.
 
-`orchestration.sh` :
+`orchestration.sh` : Bash file with the make commands to execute the docker actions.
 
 ### 4.2 Setting Everything Up
 
@@ -229,6 +233,22 @@ git clone git@github.com:algiraldohe/us-jobs-reporting-db.git
 #### 4.3.3 Transformation Load
 [See Transformation Load  Service](./transformation-load/README.md)
 
+#### 4.3.4. Crontab
+Set up the job in the local machine to run the application.
+
+``` bash
+# Open crontab
+crontab -e
+
+# Using vim: press "I" + copy paste the command below
+0 3 * * * sh /Users/alejandrogiraldoh/Development/us-jobs-reporting-db/orchestration.sh >> /Users/alejandrogiraldoh/Development/us-jobs-reporting-db/orchestration-log.txt
+
+# type esc + :wq + enter
+
+```
+
+The entered cron expression will run our orchestration.sh everyday at 03:00.
+Reference for [Cron Expressions](https://crontab.guru)
 ## 5. Cloud Implementation
 <p align="center">
   <img src="https://github.com/algiraldohe/us-jobs-reporting-db/blob/520eb73aaabd44c953a6f26d09fefac911058fc0/docs/images/Cloud%20GCP%20Architecture(2).png" alt="CloudArchitecture">
