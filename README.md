@@ -230,8 +230,9 @@ git clone git@github.com:algiraldohe/us-jobs-reporting-db.git
 [See Transformation Load  Service](./transformation-load/README.md)
 
 ## 5. Cloud Implementation
-
-![CloudArchitecture](https://github.com/algiraldohe/us-jobs-reporting-db/blob/8ecf535a03283bf6a4c6ee78f04f7dde3d1df6b5/docs/images/Cloud%20GCP%20Architecture(2).png)
+<p align="center">
+  <img src="https://github.com/algiraldohe/us-jobs-reporting-db/blob/520eb73aaabd44c953a6f26d09fefac911058fc0/docs/images/Cloud%20GCP%20Architecture(2).png" alt="CloudArchitecture">
+</p>
 
 ### 5.1 Services Breakdown
 |Component|Service|Pros|Cons|
