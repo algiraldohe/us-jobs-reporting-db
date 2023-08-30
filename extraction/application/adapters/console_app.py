@@ -38,3 +38,6 @@ class ConsoleApp:
         if self.arguments[0] == "extract_jobs":
             self.extract_jobs_adapter()
 
+        else:
+            raise Exception(f"The specified parameter {self.arguments[0]} is not recognised")
+
