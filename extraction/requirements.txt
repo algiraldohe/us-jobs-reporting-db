@@ -1,0 +1,4 @@
+# Required API packages
+python-dotenv==1.0.0
+urllib3==2.0.4
+requests==2.31.0
