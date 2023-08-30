@@ -20,5 +20,8 @@ create-migrations:
 run-migrations:
 	docker run --env-file .env.docker --network database-network transform-load-service alembic upgrade head
 
+run-admin:
+	docker run --env-file .env.docker --network database-network -p 5050:80 dpage/pgadmin4
+
 run:
 	docker run --env-file .env.docker -v $(PWD)/../file-storage/:/file-storage --network database-network transform-load-service python main.py --console "$(OPERATION)"
