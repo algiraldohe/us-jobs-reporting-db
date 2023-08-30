@@ -126,7 +126,7 @@ pre-commit install --hook-type commit-msg --hook-type pre-push
 
 The main idea is to split the code into three cores: application, domain and infrastructure (see diagram).
 
-![ProjectStructure](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/ProjectStructure.png)
+![ProjectStructure](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/ProjectStructure(1).png)
 
 
 All code relevant to how a user access data (HTTP requests, Console, WebSockets, GraphQL, etc) should be in the application folder, that is why all frameworks code is located in this folder. There is a main.py that is outside and it uses Flask, but it was left there for simplicity.
@@ -163,8 +163,8 @@ The diagram simulates a loosely decoupled architecture where each component oper
 - **Host:** Docker container running Python and PostgreSQL images with the following assignments:
  *(Each representing an independent container)*
 
-1. Parse request for the job search from the user, fetch the data and load it into a folder.
-2. Take the data, clean, transform and load it into the database with a set schema.
+		1. Parse request for the job search from the user, fetch the data and load it into a folder.
+		2. Take the data, clean, transform and load it into the database with a set schema.
 
 ### 3.2 Main Tech Stack
 
@@ -238,11 +238,18 @@ git clone git@github.com:algiraldohe/us-jobs-reporting-db.git
 
 ## 6. Future Improvements
 
-- Logging
-- Notification/messaging 
-- Implementation of abstract classes for code and methods re-utilisation
-- Error handling
-- In-depth cleansing operations, given downstream services
+### 6.1. General 
+- Logging, messaging and notification.
+- Automated unit testing.
+- GitHub actions or DevOps in general to fast-track development to delivery cycle.
+- Implementation of abstract classes for code and methods re-utilisation.
+- More robust error handling.
+- In-depth cleansing operations, given downstream services to complement the job performed.
+
+### 6.2. Services Specific
+[Improvements in extraction service](./extraction/README.md)
+[Improvements in transformation-load service](./transformation-load/README.md)
+
 
 
 

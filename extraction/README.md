@@ -151,9 +151,9 @@ After the execution of the above commands, the `file-storage` folder will be cre
 ##### 3.3.1. API USA Jobs 
 Non-desired behaviour with the API:
 
-- `DatePosted` field requires a value of 2 instead of 1 to span the results of the previous day. (Like considering today and the day before in the search). When DAYS=1, there's no output result. [See ref]()
+- `DatePosted` field requires a value of 2 instead of 1 to span the results of the previous day. (Like considering today and the day before in the search). When DAYS=1, there's no output result. [See reference](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/date_posted_1 copy.png) 
 
-- `DatePosted` field does not filter properly the output set, considering job positions published in dates outside the intervals. (Check output data on `PublicationStartDate`)
+- `DatePosted` field does not filter properly the output set, considering job positions published in dates outside the intervals. (Check output data on `PublicationStartDate`) [See reference](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/publication_start_date.png) 
   
 - `DatePosted` changing the parameter does present different results although there is overlapping.
 
