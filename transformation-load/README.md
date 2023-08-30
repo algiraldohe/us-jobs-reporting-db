@@ -7,7 +7,7 @@ Service designed to retrieve a file containing the response of a job search usin
 | :------ | :---------- |
 | [1. Installation](#1-installation) | Steps for dependencies installation |
 | [2. Guidelines](#2-guidelines) | Code structure and layout |
-| [3. APP Usage](#3-app-usage) | How to use the `extraction-service` |
+| [3. APP Usage](#3-app-usage) | How to use the `transformation-load-service` |
 | [4. Future Improvements](#4-future-improvements) | Aspects that require further attention|
 
 ## 1. Installation
