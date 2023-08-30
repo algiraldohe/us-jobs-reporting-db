@@ -255,25 +255,75 @@ Reference for [Cron Expressions](https://crontab.guru)
 </p>
 
 ### 5.1 Services Breakdown
+
 |Component|Service|Pros|Cons|
 |:---:|:---:|---|---|
-|Containerised App Execution|Google Kubernetes Engine (GKE)|- Managed clusters for deployment and scaling<br>- Auto-scaling for efficient resource utilisation<br>- Easy container deployment and management<br>- Seamless integration with other GCP services|Learning curve if new to Kubernetes|
-|Data Processing|Kubernetes Pod(s) with Python|- Customisable processing environment using Docker<br>- Flexibility in choosing Python libraries<br>- Easy scaling using Kubernetes replicas|Requires containerisation and Kubernetes knowledge|
-|Data Storage|Google Cloud Storage|- Highly available and durable storage<br>- Integrates well with other GCP services<br>- Cost-effective storage solution|Data movement between Cloud Storage and containers|
-|Database|Google Cloud SQL for PostgreSQL|- Fully managed PostgreSQL service<br>- Automatic backups and high availability<br>- Seamless integration with GCP services|Slightly higher cost compared to self-managed solutions|
-|Scheduling|Cloud Scheduler|- Managed job scheduler for task automation<br>- Integrates well with other GCP services<br>- Can trigger HTTP endpoints directly|Slight cost for scheduling, but generally low|
-|Logging and Monitoring|Google Cloud Logging and|- Centralised logging and monitoring for application<br>- Integration with other GCP services<br>- Customisable alerts and dashboards|Cost might increase with extensive usage|
-|Credentials Management|Google Cloud Secret Manager|- Securely manage and rotate credentials<br>- Integration with GCP services|Slight cost, but generally low|
+|Containerised App Execution|Google Kubernetes Engine (GKE)|- Managed clusters for deployment and scaling<br>- Auto-scaling for efficient resource utilisation <br>- Easy container deployment and management<br>|- Learning curve to learn how to use Kubernetes <br> - Cost is higher for simple applications in the short-term|
+|Data Processing|Kubernetes Pod(s) with Python|- Customisable processing environment using Docker<br> - Flexibility in choosing Python libraries<br> - Easy scaling using Kubernetes replicas|- Learning curve to learn how to use Kubernetes|
+|Data Storage|Google Cloud Storage|- Highly available and durable storage<br>- Cost-effective storage solution|- Constant data movement and retrieval does not allow for cost optimisation|
+|Database|Google Cloud SQL for PostgreSQL|- Fully managed PostgreSQL service<br> - Automatic backups and high availability. <br>|- Slightly higher cost compared to self-managed solutions.|
+|Scheduling|Cloud Scheduler|- Managed job scheduler for task automation. <br> - Can trigger HTTP endpoints directly.|Slight more costly for scheduling, but low in general.|
+|Logging and Monitoring|Google Cloud Logging and|- Centralised logging and monitoring for application<br> - Customisable alerts and dashboards. |The cost might increase with extensive usage.|
+|Credentials Management|Google Cloud Secret Manager|- Securely manage and rotate credentials<br>|Slight costly, but generally low|
+
+
+### 5.2. Rationale
+**Component:** Containerised App Execution
+1. **Alternative Service:** **Google Compute Engine (GCE)**
+
+*Reasons not to use it:*
+- **Resource Management:** While GCE allows you to create virtual machines for running your containers, it doesn't offer the same level of container orchestration and scaling as GKE. You would need to manually manage auto-scaling and cluster operations.
+- **Complexity:** Managing individual VM instances for containers can be more complex and time-consuming compared to GKE's managed Kubernetes clusters.
+
+**Component:** Data Processing and Transformations
+**Alternative Service:** Google Cloud Dataproc
+
+*Reasons not to use it:*
+- **Overhead:** Google Cloud Dataproc is designed for processing big data workloads using frameworks like Hadoop and Spark. right now the application does not have extensive data needs, using Dataproc might introduce unnecessary overhead.
+- **Configuration Complexity:** Setting up and configuring Dataproc clusters might be more complex than using Kubernetes Pods for smaller-scale processing tasks.
+- **Redefinition Tasks:** In order to take out most of the distributed workloads, might require tweaking the code for parallel processing or switch it over completely to PySpark.
+
+**Component:** Data Storage 
+**Alternative Service:** Google Cloud Bigtable
+    
+*Reasons not to use it:*
+- **Data Format:** Google Cloud Bigtable is designed for storing and processing large-scale data using a NoSQL data model. Is designed for high-throughput, low-latency applications which is not the case. Besides the fact that Cloud Storage provides the choice to change the storage class which ultimately can reduce cost and integrates directly with BigQuery providing query capabilities.
+- **Querying Flexibility:** Bigtable's query capabilities are different from Cloud Storage and relational databases. If you need complex querying and relational data modeling, Bigtable might not be the ideal choice, although this point highly depends on the downstream analytics services that are going to use the data. As the process extends, Cloud Storage is very cost-efficient and and don't require transform operations before loading the data., not even a defined schema.
+
+**Component:** Database 
+**Alternative Service:** Google Cloud Firestore
+
+*Reasons not to use it:*
+- **Data Model:** Firestore is a NoSQL document database, and its data model might not align with the requirements of a traditional relational database like PostgreSQL. Although at this point highly depends on the downstream analytics services that are going to use the data, to establish how should be stored. If you need complex relationships and querying capabilities, BigQuery provides transformation, query and flexibility capabilities taking into account the structure of the data after the transformation process.
+- **Schema Flexibility:** While NoSQL databases offer schema flexibility, they might not provide the same level of data consistency and integrity as a well-designed relational database schema, which BigQuery can infer from Json or even be defined but allowing flexibility on aggregated or nested fields while maintaining data consistency.
+
+**Component:** Scheduling 
+**Alternative Service:** Google Cloud Composer (managed Apache Airflow)
+
+*Reasons not to use it:*
+- **Complexity:** Cloud Composer is designed for orchestrating complex workflows. If your scheduling needs are relatively simple, using Cloud Scheduler might be more straightforward.
+- **Cost:** Cloud Composer involves additional costs compared to Cloud Scheduler, so if cost optimisation is a priority, Cloud Scheduler might be a more cost-effective option.
+
+ **Component:** Credentials Management 
+ **Alternative Service:** Google Cloud KMS (Key Management Service)
+ 
+*Reasons not to use it:*
+- **Focus on Encryption:** Google Cloud KMS is primarily designed for managing cryptographic keys and data encryption which in this case is not a must considering the nature of the data. While it can manage credentials, its primary use case is different from Google Cloud Secret Manager's focus on managing secrets and credentials.
+
+### 5.3. Summary
+
+For a specific use case, many services can provide out-of-the-box functional solutions that can fulfil the intended purpose, but in the end, we need to have a very specific business requirement where you can assess the trade-offs of choosing one service or the other more accurately. At the moment with the information provided and the parameters given to solve the use case, I'm confident to say that the proposed architecture presents an optimal cutting-edge solution to support the functioning of the application developed, with good practices aiming to optimise costs, retain security and achieve operational efficiency.
 
 ## 6. Future Improvements
 
 ### 6.1. General
 - Logging, messaging and notification.
 - Automated unit testing.
-- GitHub actions or DevOps, in general, to fast-track development to production cycle.
+- GitHub actions or DevOps, in general, to fast-track development to the production cycle.
 - Implementation of abstract classes for code and methods re-utilisation.
 - More robust error handling.
 - In-depth cleansing operations, given downstream services to complement the job performed.
+- Modernise the tech stack using tools like DBT for a more robust and well-managed transformation pipeline execution, and Terraform to take care of the management and provision of cloud services with good practices.
 
 ### 6.2. Services Specific
 - [Improvements in extraction service](./extraction/README.md)
