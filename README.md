@@ -1,5 +1,5 @@
 # USA Jobs API Search
-Flask app designed for retrieving Daily Job Opportunity Announcements data for a given keyword.
+APP designed for retrieving Daily Job Opportunity Announcements data for a given keyword.
 
 [API Docs](https://developer.usajobs.gov/API-Reference/GET-api-Search)
 
@@ -17,6 +17,19 @@ Flask app designed for retrieving Daily Job Opportunity Announcements data for a
 ## 1. Installation
 
 ### 1.1 Dependencies installation
+
+---
+```
+As of today: Wednesday, 30th August/2023
+
+running the services with:
+
+Python == 3.11.4
+MacOS Ventura 13.5 | Apple M1 2020
+
+```
+
+---
 
 To install this project, it is recommended to use `virtualenv` python package. By default, macOS has installed the `python3` binary. So the following commands should work:
 
@@ -141,12 +154,6 @@ Some rules we should encourage in our development:
 
 The diagram simulates a loosely decoupled architecture where each component operates independently improving flexibility and scalability.
 
-**Tech Stack:**
-Cron: Time-based job scheduler
-Python
-Docker
-PostgreSQL
-
 ### 3.1. Components
 
 - **Orchestrator:** In charge of making the request to the host in order to carry out the process at the specified time (daily scheduled trigger).
@@ -161,10 +168,12 @@ PostgreSQL
 
 ### 3.2 Main Tech Stack
 
-**Python**
-**SQLAlchemy**
-**Alembic**
-**PostgreSQL**
+- **Python**
+- **SQLAlchemy**
+- **Alembic**
+- **PostgreSQL**
+- **Cron**
+- **Docker**
 
 ## 4. APP Usage
 
