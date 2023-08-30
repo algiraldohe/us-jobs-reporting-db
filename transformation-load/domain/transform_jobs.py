@@ -1,5 +1,7 @@
 from infrastructure.json_search_service import find_json_path
+from datetime import datetime
 import pandas as pd
+import os
 
 
 def navigate_dict(data, keys):
@@ -97,13 +99,15 @@ def extract_fields_data(data:dict, path:list) -> dict:
     return extracted_data
 
 
-def arrays_to_dataframe(data:list) -> pd.DataFrame:
+def arrays_to_dataframe(data:list, filestorage:str) -> pd.DataFrame:
     """
     This function takes an array and creates a tabular format
     out of it to fit in a pd.DataFrame object.
 
     Args:
-        data (list): _description_
+        data (list): Already transformed records with nested dictionary per field
+        extracted.
+        ilestorage (str): Raw datafiles location
 
     Returns:
         pd.DataFrame: _description_
@@ -113,8 +117,35 @@ def arrays_to_dataframe(data:list) -> pd.DataFrame:
         combined_data_dict = {**combined_data_dict, **dictionary}
 
     jobs_data_df = pd.DataFrame(combined_data_dict)
+    jobs_data_operationalised_df = add_operationalisation_columns(jobs_data_df, filestorage)
 
-    return jobs_data_df
+    return jobs_data_operationalised_df
+
+def add_operationalisation_columns(data:pd.DataFrame, filestorage:str) -> pd.DataFrame:
+    """
+    This function will be in charge to add the filename from
+    where the record is coming from and the timestamp before
+    saving the records.
+
+    Args:
+        data (pd.DataFrame): Already transformed dataframe with records extracted
+        from json file.
+        filestorage (str): Raw datafiles location.
+
+    Returns:
+        pd.DataFrame: Already transformed dataframe with new columns StorageFile,
+        DateAdded, and UserAdded.
+    """
+
+    current_datetime = datetime.now()
+    datestamp = current_datetime.strftime("%Y-%m-%d")
+    filename = os.path.join(filestorage, f"{datestamp}-us-jobs.json")
+
+    data['StorageFile'] = filename
+    data['DateAdded'] = current_datetime
+    data['UserAdded'] = "usa-jobs-application"
+
+    return data
 
 
 
