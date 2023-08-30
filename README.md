@@ -162,9 +162,22 @@ PostgreSQL
 
 ## 4. APP Usage
 
-### 4.1 Setting Everything Up
+### 4.1 Components
 
-### 4.2 Commands
+`extraction`: This folder contains all the container configurations, packages and code required to carry out the search request and store the response data back in the system.
+
+`transformation-load:` This folder contains all the container configurations, packages and code required to read the data from the file stored, format it, and store it in the Postgres database.
+
+`file-storage:` This folder serves the purpose of a "bucket" or file storage in the local environment.
+
+`postgres-data:` This folder serves the purpose of storing the data transformed in a resilient way independently from the container storage.`
+
+### 4.2 Setting Everything Up
+
+The two main services of the app run independently from one another. There are four containers that compose the application `us-jobs-application`:
+1. 
+
+### 4.3 Commands
 
 
 ## 5. Cloud Implementation
