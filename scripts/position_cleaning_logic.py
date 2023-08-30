@@ -1,4 +1,5 @@
 import json
+import numpy as np
 
 
 def extract_data_position_title(path:list, data:dict):
@@ -70,14 +71,15 @@ def find_location(data, target_location, is_remote:list):
 
     return fetched_locations
 
-
-filename = "/Users/alejandrogiraldoh/Development/us-jobs-reporting-db/file-storage/2023-08-27-us-jobs.json"
+# Change the path for a file retrieved from the extraction service
+filename = "/Users/alejandrogiraldoh/Development/us-jobs-reporting-db/file-storage/2023-08-30-us-jobs.json"
 with open(filename, 'r') as json_file:
     jobs_data = json.load(json_file)
 
 keys = ['SearchResult', 'SearchResultItems', 'MatchedObjectDescriptor', 'PositionLocation']
-flags = [True, False, False, False, False, False, False, True, True, True, False, False, True, False, True, False, True, True, True, True, True, True, True, True, False, False, True, False, True, False, False, False, False, False, False, False, False, True, True, True, True, True, True, True, False, False, False, False, False, True, True, True, False, False, False, False, False, True, True, True, True, True, True, True, True, False, False, True, True, True, True, True, True, True, True, True, True, True, False, True, False, False, True, False, True, False, True, True, True, False, True, True, True, True, True, True, True, True, True, True]
 extracted_data = extract_data_position_title(keys, jobs_data)
+size = len(extracted_data["PositionLocation"])
+flags = np.random.choice([True, False], size=(size,))
 
 target_location = "Chicago, Illinois"
 

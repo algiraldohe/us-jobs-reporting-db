@@ -16,6 +16,11 @@ load_dotenv()
 
 if sys.argv[1] == "--console":
     database_storage_service = DatabaseStorageService()
-    console_app = ConsoleApp(database_storage_service)  # Dependency injection
+    console_app = ConsoleApp(database_storage_service)
     console_app.create_app()
 
+elif sys.argv[1] == "--flask":
+    print("Flask app not implemented")
+
+else:
+    raise Exception(f"Mode {sys.argv[1]} not found")

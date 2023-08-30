@@ -47,6 +47,9 @@ class ConsoleApp:
         if self.arguments[0] == "save_jobs":
             extracted_jobs_data = self.store_jobs_adapter()
 
+        else:
+            raise Exception(f"Operation {sys.argv[1]} not found")
+
 
 
 

@@ -232,6 +232,7 @@ python3 main.py --console "save_jobs"
 
 After the execution of the above commands, you can check with the admin panel that your data was created. Mind your credentials in the `.env` file (`PGADMIN_DEFAULT_EMAIL`,`PGADMIN_DEFAULT_PASSWORD`)
 
+***Remember that the admin is running in the port 5050 of the localhost.***
 ### 3.3. Important Functionality Considerations
 
 ##### 3.3.1. Codebase
