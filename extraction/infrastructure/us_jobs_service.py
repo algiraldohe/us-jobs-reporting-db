@@ -34,16 +34,22 @@ class USJobsService:
         Returns:
             dict: JSON with the response data
         """
-
         # Send the GET request
-        response = s.get(
-            f"{API_URL}/search", params=request, headers=self.headers
-        )
-        if response.status_code == 200:
+        response = s.get(f"{API_URL}/search", params=request, headers=self.headers)
+        if response.status_code == 201:
             # Parse the JSON response
             data = response.json()
 
             return data
 
+        elif response.status_code == 401:
+            message = f"""STATUS_CODE[{response.status_code}] - The request is not authorised.\
+            Did you authenticate and provide the correct APIKEY [USAJOBS_KEY]"""
+
+            raise Exception(message)
+
         else:
-            raise Exception("The API is not working properly, try again later.")
+            message = f"""STATUS_CODE[{response.status_code}]  - The API is not working properly,\
+            check your request or try again later. If the error persists, contact your\
+            sys admin."""
+            raise Exception(message)
