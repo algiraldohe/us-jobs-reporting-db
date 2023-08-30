@@ -34,8 +34,7 @@ class ConsoleApp:
 
         extracted_data = list(map(lambda x: extract_fields_data(data=jobs_data, path=x), self.paths.values()))
 
-        jobs_dataframe = arrays_to_dataframe(data=extracted_data)
-
+        jobs_dataframe = arrays_to_dataframe(data=extracted_data, filestorage=filestorage)
         try:
             save_jobs(jobs_dataframe, self.storage_service, **{"json_fields":["PositionLocation", "PositionRemuneration"]})
         except OperationalError as e:

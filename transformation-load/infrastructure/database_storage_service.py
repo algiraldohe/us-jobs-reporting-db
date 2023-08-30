@@ -46,11 +46,7 @@ class DatabaseStorageService:
         """
         # Create a context manager for SQLAlchemy session
         with self.session_scope() as session:
-            query = "SELECT * FROM jobs"
             data.to_sql(name="jobs", con=self.engine, index=False, if_exists="append")
-            queried_df = pd.read_sql_query(query, con=session.bind)
-            print("Data in POSTFRESQL \n")
-            print(queried_df.info())
 
     def read_file(self, filestorage:str) -> dict:
         """_summary_

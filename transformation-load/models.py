@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, JSON, Boolean
+from sqlalchemy import Column, Integer, String, JSON, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 # Define the model
@@ -17,6 +17,12 @@ class Job(Base):
     PositionLocation = Column(JSON)
     PositionRemuneration = Column(JSON)
     RemoteIndicator = Column(Boolean)
+    StorageFile = Column(String)
+    DateAdded = Column(DateTime)
+    UserAdded = Column(String)
 
     def __repr__(self):
-        return f"id: {self.id}, PositionTitle: {self.jobname}"
+        return f"id: {self.id}\
+            , PositionTitle: {self.PositionTitle}\
+            , StorageFile: {self.StorageFile}\
+            , DateAdded: {self.DateAdded} "
