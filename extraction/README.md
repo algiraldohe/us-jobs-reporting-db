@@ -100,3 +100,22 @@ make run
 **Running Locally**
 
 `python3 main.py --console "extract_jobs" "data engineering" 2 "Chicago, Illinois"`
+
+### Commands 
+
+```bash
+# Assuming you are just outside of the cloned repo
+cd us-jobs-reporting-db
+
+# 1. change the directory to the `extraction` service director
+cd extraction
+
+# 2. build the image of the container using the Makefile
+make build
+
+# 3. run the service to extract and save the data from USA Jobs reporting database
+make run
+
+```
+
+After the execution of the above commands, the `file-storage` folder will be created and there will be a `YYYY-mm-dd-us-jobs.json` file inside, corresponding to the date the process was run.

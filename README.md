@@ -160,6 +160,9 @@ PostgreSQL
 1. Parse request for the job search from the user, fetch the data and load it into a folder.
 2. Take the data, clean, transform and load it into the database with a set schema.
 
+### 3.2 Main Tech Stack
+
+
 ## 4. APP Usage
 
 ### 4.1 Components
@@ -170,15 +173,43 @@ PostgreSQL
 
 `file-storage:` This folder serves the purpose of a "bucket" or file storage in the local environment.
 
-`postgres-data:` This folder serves the purpose of storing the data transformed in a resilient way independently from the container storage.`
+`postgres-data:` This folder serves the purpose of storing the data transformed in a resilient way independently from the container storage.
 
+`database-network`: Virtual environment created to allow the docker containers to communicate with each other.
 ### 4.2 Setting Everything Up
 
+#### 4.2.1 Containers
 The two main services of the app run independently from one another. There are four containers that compose the application `us-jobs-application`:
-1. 
+
+1. `extraction-service` 
+2. `transform-load-service`
+3. `db`
+4. `admin`
+
+#### 4.2.2 Requirements:
+- Docker must be installed and running already in the environment.
+- Python must be installed if running locally without docker.
+- `.env` and `.env.docker` should be filled in. 
+  ***Note: (Keep the env variable FILESTORAGE=../file-storage/)***
+- Verify in the folder repository that the user has the right permissions to execute the code.
 
 ### 4.3 Commands
 
+The following instructions illustrate how to run `us-jobs-application` using docker.
+
+***DISCLAIMER: The following instructions only apply to users that are running MacOS. This documentation does not provide the setting up instructions to run the code in Windows although the commands might be similar to Linux environments***
+
+#### 4.3.1 Setting the Repo
+
+1. Cloning the repository 
+```bash
+git clone git@github.com:algiraldohe/us-jobs-reporting-db.git
+
+```
+
+2. Fill the  `.env.docker` to run from docker.
+#### 4.3.2 Extraction
+[See Extraction Service](./extraction/README.md)
 
 ## 5. Cloud Implementation
 
