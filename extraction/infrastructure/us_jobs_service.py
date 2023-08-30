@@ -36,7 +36,7 @@ class USJobsService:
         """
         # Send the GET request
         response = s.get(f"{API_URL}/search", params=request, headers=self.headers)
-        if response.status_code == 201:
+        if response.status_code == 200:
             # Parse the JSON response
             data = response.json()
 

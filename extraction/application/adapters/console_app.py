@@ -28,7 +28,8 @@ class ConsoleApp:
             "DatePosted": int(self.arguments[2]),
             "LocationName": self.arguments[3],
             "Page": 0,
-            "ResultsPerPage": 100
+            "ResultsPerPage": 500,
+            "PayGradeLow":int(self.arguments[4])
         }
         extract_jobs(request, self.storage_service)
 
