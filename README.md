@@ -10,8 +10,10 @@ Flask app designed for retrieving Daily Job Opportunity Announcements data for a
 | :------ | :---------- |
 | [1. Installation](#1-installation) | Steps for dependencies installation and other configurations |
 | [2. Guidelines](#2-guidelines) | Philosophy and rules for coding |
-| [3. Architecture Walkthrough](#3-architecture-walkthrough) | Design of the Implemented Solution |
-| [4. API Usage](#4-api-usage) | How to use this service |
+| [3. Architecture Walkthrough](#3-architecture-walkthrough) | APP design and project general layout |
+| [4. APP Usage](#4-app-usage) | How to use this application |
+| [5. Cloud Implementation](#5-cloud-implementation) | APP architecture implemented in gcp |
+| [6. Future Improvements](#6-future-improvements) | Making a more robust and efficient application |
 
 ## 1. Installation
 
@@ -157,3 +159,23 @@ PostgreSQL
 
 1. Parse request for the job search from the user, fetch the data and load it into a folder.
 2. Take the data, clean, transform and load it into the database with a set schema.
+
+## 4. APP Usage
+
+### 4.1 Setting Everything Up
+
+### 4.2 Commands
+
+
+## 5. Cloud Implementation
+
+![CloudArchitecture](https://github.com/algiraldohe/us-jobs-reporting-db/blob/development/docs/images/Cloud GCP Architecture.png)
+
+### 5.1 Services Breakdown
+
+
+## 6. Future Improvements
+
+
+
+
