@@ -180,6 +180,8 @@ PostgreSQL
 
 `database-network`: Virtual environment within docker, created to allow the docker containers to communicate with each other.
 
+`orchestration.sh` : 
+
 ### 4.2 Setting Everything Up
 
 #### 4.2.1 Containers
