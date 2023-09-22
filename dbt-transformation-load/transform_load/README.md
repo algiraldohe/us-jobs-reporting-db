@@ -22,3 +22,6 @@ Friday 22-09-2023
 - host: had to put localhost as host for dbt to recognise the running instance on docker. Need to check how it would work running from docker.
 
 - sources.yml file: name by default follow the schema only change it if schema and db differ but for postgres db does not need to be stipulated.
+
+- macros: extract_values_from_json.sql
+`dbt run-operation get_json_field --args '{column_name: position_remuneration}'`
