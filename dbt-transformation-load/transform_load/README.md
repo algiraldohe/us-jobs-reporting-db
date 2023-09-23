@@ -30,6 +30,7 @@ Saturday 23-09-2023
 
 - Always try to go native, there are ready solutions that doesn't required further development within the tech stack that you're using.
 
+- Manipulating JSON is postgres [JSON Postgres Operators](https://www.postgresql.org/docs/current/functions-json.html)
 
 ### Issues References:
 

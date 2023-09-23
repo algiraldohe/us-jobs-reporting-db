@@ -1,20 +1,32 @@
+{{
+  config(
+    materialized = 'ephemeral',
+    )
+}}
+
 with
-  json_extracted_data (id, json) as (values
+    position_remuneration_json (id, json) as (values
 {%- for dict_item in get_json_field("position_remuneration", ref("src_job_listings") ) -%}
     ({{loop.index}}, '{{dict_item[1:-1]}}' :: jsonb){{ ", " if not loop.last else "" }}
 {%- endfor -%}
 )
 
+
 select
-id
+prj.id
 , "MinimumRange" as minimum_range
 , "MaximumRange" as maximum_range
 , "Description" as time_period
 
+
 from
-json_extracted_data,
-lateral jsonb_to_record(json_extracted_data.json) as (
+position_remuneration_json ,
+lateral jsonb_to_record(prj.json) as (
     "MinimumRange" numeric(8,2)
     , "MaximumRange" numeric(8,2)
     , "Description" text
     )
+
+
+
+
