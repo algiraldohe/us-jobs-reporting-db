@@ -1,6 +1,6 @@
 with
   json_extracted_data (id, json) as (values
-{%- for dict_item in get_json_field("position_remuneration") -%}
+{%- for dict_item in get_json_field("position_remuneration", ref("src_job_listings") ) -%}
     ({{loop.index}}, '{{dict_item[1:-1]}}' :: jsonb){{ ", " if not loop.last else "" }}
 {%- endfor -%}
 )

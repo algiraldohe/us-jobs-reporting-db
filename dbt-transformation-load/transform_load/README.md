@@ -29,3 +29,8 @@ Friday 22-09-2023
 Saturday 23-09-2023
 
 - Always try to go native, there are ready solutions that doesn't required further development within the tech stack that you're using.
+
+
+### Issues References:
+
+- [Unfolding JSONB type Data in Postgres](https://stackoverflow.com/questions/74135552/how-can-i-use-lateral-join-to-flatten-the-jsonb-in-postgres)
