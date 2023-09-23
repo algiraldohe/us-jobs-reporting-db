@@ -25,3 +25,7 @@ Friday 22-09-2023
 
 - macros: extract_values_from_json.sql
 `dbt run-operation get_json_field --args '{column_name: position_remuneration}'`
+
+Saturday 23-09-2023
+
+- Always try to go native, there are ready solutions that doesn't required further development within the tech stack that you're using.
